@@ -115,8 +115,7 @@ class BaseAgent(ABC):
 
     def exploit(self, state):
         # Act without randomness.
-        state = torch.ByteTensor(
-            state).unsqueeze(0).to(self.device).float() / 255.
+        state = torch.ByteTensor(np.array(state)).unsqueeze(0).to(self.device).float() / 255.
         with torch.no_grad():
             action = self.online_net.calculate_q(states=state).argmax().item()
         return action
