@@ -265,7 +265,7 @@ class LazyFrames(object):
         return self._force()[i]
 
 
-def make_atari(env_id):
+def make_atari(env_id, frameskip, repeat_action_probability):
     """
     Create a wrapped atari envrionment
     :param env_id: (str) the environment ID
@@ -273,7 +273,8 @@ def make_atari(env_id):
     """
     # env = gym.make(env_id) # Implementation from original repo
     # assert 'NoFrameskip' in env.spec.id # Same as above, doesnt work for ALE environments without NoFrameskip.
-    env = gym.make(env_id, full_action_space=False)
+
+    env = gym.make(env_id, full_action_space=False, frameskip=frameskip, repeat_action_probability=repeat_action_probability)
     env = NoopResetEnv(env, noop_max=30)
     env = MaxAndSkipEnv(env, skip=4)
     return env
@@ -304,9 +305,9 @@ def wrap_deepmind_pytorch(env, episode_life=True, clip_rewards=True,
     return env
 
 
-def make_pytorch_env(env_id, episode_life=True, clip_rewards=True,
+def make_pytorch_env(env_id, frameskip, repeat_action_probability, episode_life=True, clip_rewards=False,
                      frame_stack=True, scale=False):
-    env = make_atari(env_id)
+    env = make_atari(env_id, frameskip=frameskip, repeat_action_probability=repeat_action_probability)
     env = wrap_deepmind_pytorch(
         env, episode_life, clip_rewards, frame_stack, scale)
     return env

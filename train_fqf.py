@@ -12,9 +12,9 @@ def run(args):
         config = yaml.load(f, Loader=yaml.SafeLoader)
 
     # Create environments.
-    env = make_pytorch_env(args.env_id)
+    env = make_pytorch_env(env_id=args.env_id, frameskip=args.frameskip, repeat_action_probability=args.repeat_action_probability)
     test_env = make_pytorch_env(
-        args.env_id, episode_life=False, clip_rewards=False)
+        env_id=args.env_id, frameskip=args.frameskip, repeat_action_probability=args.repeat_action_probability, episode_life=False, clip_rewards=False)
 
     # Specify the directory to log.
     name = args.config.split('/')[-1].rstrip('.yaml')
@@ -36,5 +36,10 @@ if __name__ == '__main__':
     parser.add_argument('--env_id', type=str, default='ALE/MsPacman-v5')
     parser.add_argument('--cuda', action='store_true')
     parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--frameskip', type=tuple, default=(2, 5,))
+    parser.add_argument('--repeat_action_probability', type=float, default=0.0)
     args = parser.parse_args()
+    if len(args.frameskip) == 1:
+        args.frameskip = args.frameskip[0]
+        assert type(args.frameskip) == int
     run(args)
