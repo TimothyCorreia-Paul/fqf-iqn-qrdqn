@@ -28,7 +28,7 @@ class NoopResetEnv(gym.Wrapper):
         if self.override_num_noops is not None:
             noops = self.override_num_noops
         else:
-            noops = self.unwrapped.np_random.randint(1, self.noop_max + 1)
+            noops = self.unwrapped.np_random.integers(1, self.noop_max + 1)
         assert noops > 0
         obs = None
         for _ in range(noops):
@@ -271,8 +271,9 @@ def make_atari(env_id):
     :param env_id: (str) the environment ID
     :return: (Gym Environment) the wrapped atari environment
     """
-    env = gym.make(env_id)
-    assert 'NoFrameskip' in env.spec.id
+    # env = gym.make(env_id) # Implementation from original repo
+    # assert 'NoFrameskip' in env.spec.id # Same as above, doesnt work for ALE environments without NoFrameskip.
+    env = gym.make(env_id, full_action_space=False)
     env = NoopResetEnv(env, noop_max=30)
     env = MaxAndSkipEnv(env, skip=4)
     return env

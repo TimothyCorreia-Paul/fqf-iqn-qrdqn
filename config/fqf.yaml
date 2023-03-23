@@ -1,26 +1,34 @@
-num_steps: 50000000  # It equals to 200M frames.
+# num_steps: 50_000_000  # It equals to 200M frames.
+num_steps: 1_000_000  # It equals to 4M frames.
 batch_size: 32
 N: 32
 num_cosines: 64
 ent_coef: 0  # You can use entropy loss as a regularizer.
 kappa: 1.0
-quantile_lr: 5.e-5
-fraction_lr: 2.5e-9
-memory_size: 1000000
+# quantile_lr: 5.e-5
+# fraction_lr: 2.5e-9
+quantile_lr: 5.e-3
+fraction_lr: 5.e-7
+memory_size: 1_000_000
 gamma: 0.99
 multi_step: 1
 update_interval: 4
-target_update_interval: 10000
-start_steps: 50000
+# target_update_interval: 10000
+target_update_interval: 500
+# start_steps: 50000
+start_steps: 10_000
 epsilon_train: 0.01
 epsilon_eval: 0.001
-epsilon_decay_steps: 250000  # It equals to 1M frames.
+# epsilon_decay_steps: 250000  # It equals to 1M frames.
+epsilon_decay_steps: 12_500  # It equals to 50K frames.
 double_q_learning: False
 dueling_net: False
 noisy_net: False
 use_per: False
-log_interval: 100
-eval_interval: 250000
-num_eval_steps: 125000  # It equals to 500k frames.
+log_interval: 1
+# eval_interval: 250000
+eval_interval: 100_000
+# num_eval_steps: 125000  # It equals to 500k frames.
+num_eval_steps: 12_500  # It equals to 50k frames.
 max_episode_steps: 27000
 grad_cliping:

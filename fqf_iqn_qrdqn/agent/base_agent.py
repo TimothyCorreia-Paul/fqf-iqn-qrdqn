@@ -183,7 +183,8 @@ class BaseAgent(ABC):
             self.writer.add_scalar(
                 'return/train', self.train_return.get(), 4 * self.steps)
 
-        print(f'Episode: {self.episodes:<4}  '
+        print(f'Step: {self.steps:<4}  '
+              f'Episode: {self.episodes:<4}  '
               f'episode steps: {episode_steps:<4}  '
               f'return: {episode_return:<5.1f}')
 
